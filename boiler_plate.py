@@ -20,6 +20,31 @@ print("running main")
 #start processes
 MIN_DIST = 0.3
 #add starter functions here
+def stopSignDetection(robot):
+    try:
+        # Check the image using the robot's functionality
+        picture = robot.checkImage()
+
+        # Convert the image to OpenCV format
+        imageToCV = robot.roslmg_to_cv2()
+
+        # Load the YOLO model for object detection
+        model = YOLO('yolov8n.pt')
+
+        # Perform prediction of stop signs using the ML_predict_stop_sign function
+        stop_sign_detected, x1, y1, x2, y2 = ML_predict_stop_sign(model, imageToCV)
+
+        # Further process the detection results as needed
+
+        # Return the detection results or perform additional actions
+
+        return stop_sign_detected, x1, y1, x2, y2
+
+    except Exception as e:
+        print(f"Error in stopSignDetection: {e}")
+        return None
+
+
 def detectCollision(): 
     msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
@@ -28,16 +53,19 @@ def detectCollision():
     return False
 
 def reverseTurn():
+    robot.send_cmd_vel(self, 0, 0)
     msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
     
-    robot.send_cmd_vel(self, -1, 0)
-    while (min_dist <= MIN_DIST * 2):
-        rclpy.spin_once(robot, timeout_sec=0.1)
+    while (min_dist <= MIN_DIST * 3):
+        robot.send_cmd_vel(self, -10, 0)
+        rclpy.spin_once(robot, timeout_sec=0.05)
         msg = robot.checkScan()
         min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
-    robot.send_cmd_vel(self, 0, 0)
     robot.rotate(self, 30, 1)
+
+def automatedMove():
+    robot.send_cmd_vel(self, 3, 0)
     
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
@@ -51,7 +79,8 @@ try:
         rclpy.spin_once(robot, timeout_sec=0.1)
 
         #Add looping functionality here
-        robot.send_cmd_vel(self, 1, 0)
+        automatedMove()
+
         if detectCollision():
             reverseTurn()
         
