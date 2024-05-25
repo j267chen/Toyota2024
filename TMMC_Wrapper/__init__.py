@@ -9,6 +9,11 @@
 #---    - sensor values (done)
 #-----------------
 
+def use_hardware():
+    global is_SIM
+
+
+
 #-----imports-----
 from sensor_msgs.msg import LaserScan
 from irobot_create_msgs.action import Dock,Undock
