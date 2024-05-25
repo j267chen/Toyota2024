@@ -48,6 +48,7 @@ def stopSignDetection(robot):
 def detectCollision(): 
     msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(msg)
+    print("Test1")
     if min_dist <= MIN_DIST:
         print("Collision detected")
         return True
@@ -67,6 +68,7 @@ def reverseTurn():
 
 def automatedMove():
     robot.send_cmd_vel(3, 0)
+    print("Moving")
     
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
