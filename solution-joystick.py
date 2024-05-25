@@ -8,6 +8,12 @@ import math
 if not rclpy.ok():
     rclpy.init()
 
+TMMC_Wrapper.is_SIM = True
+
+if TMMC_Wrapper.is_SIM:
+    TMMC_Wrapper.use_hardware()
+
+
 #specify hardware api
 TMMC_Wrapper.use_hardware()
 if not "robot" in globals():
