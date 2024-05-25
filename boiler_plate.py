@@ -29,9 +29,7 @@ def detectCollision():
 
 def stopAndReverse():
     robot.send_cmd_vel(self, 0, 0)
-    while (//condition is certain distance from wall):
-        robot.send_cmd_vel(self, -1, 0)
-
+    robot.send_cmd_vel(self, -1, 0)
 
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
