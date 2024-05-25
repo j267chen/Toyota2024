@@ -9,10 +9,6 @@
 #---    - sensor values (done)
 #-----------------
 
-def use_hardware():
-    global is_SIM
-
-
 
 #-----imports-----
 from sensor_msgs.msg import LaserScan
@@ -49,6 +45,7 @@ DEBUG = False #set to false to disable terminal printing of some functions
 
 #not sure if we need , modify later, seems like an init thing
 def use_hardware():
+    global is_SIM
     # import ROS settings for working locally or with the robot (equivalent of ros_local/ros_robot in the shell)
     env_file = ".env_ros_robot"
     os.environ.update(dict([l.strip().split("=") for l in filter(lambda x: len(x.strip())>0,open(env_file).readlines())]))

@@ -4,14 +4,14 @@ import rclpy
 import numpy as np
 import math
 
+TMMC_Wrapper.is_SIM = True
+
+if not TMMC_Wrapper.is_SIM:
+    TMMC_Wrapper.use_hardware()
+
 #start ros
 if not rclpy.ok():
     rclpy.init()
-
-TMMC_Wrapper.is_SIM = True
-
-if TMMC_Wrapper.is_SIM:
-    TMMC_Wrapper.use_hardware()
 
 #specify hardware api
 TMMC_Wrapper.use_hardware()
