@@ -33,6 +33,10 @@ try:
     print("Listening for keyboard events. Press keys to test, Ctrl C to exit")
     while True: 
         rclpy.spin_once(robot, timeout_sec=0.1)
+
+        if detectCollision() == True:
+            stopAndReverse()
+
 except KeyboardInterrupt:
     print("keyboard interrupt receieved.Stopping...")
 finally:
