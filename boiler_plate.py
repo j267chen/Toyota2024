@@ -27,11 +27,15 @@ def detectCollision():
         return True
     return False
 
-def stopAndReverse():
+def reverseTurn():
+    msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
-    robot.send_cmd_vel(self, 0, 0)
+    
+    robot.send_cmd_vel(self, -1, 0)
     while (min_dist <= MIN_DIST * 2):
-        robot.send_cmd_vel(self, -1, 0)
+        rclpy.spin_once(robot, timeout_sec=0.1)
+    robot.rotate(self, 30, 1)
+    
 
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
@@ -44,10 +48,10 @@ try:
         #rclpy,spin_once is a function that updates the ros topics once
         rclpy.spin_once(robot, timeout_sec=0.1)
 
-        if detectCollision() == True:
-            stopAndReverse()
-
         #Add looping functionality here
+        robot.send_cmd_vel(self, 1, 0)
+        if detectCollision():
+            reverseTurn()
         
 except KeyboardInterrupt:
     print("keyboard interrupt receieved.Stopping...")
