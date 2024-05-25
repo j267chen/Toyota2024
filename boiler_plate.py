@@ -18,7 +18,7 @@ if not "robot" in globals():
 print("running main")
 
 #start processes
-MIN_DIST = 0.3
+MIN_DIST = 0.5
 #add starter functions here
 def stopSignDetection(robot):
     try:
@@ -47,25 +47,25 @@ def stopSignDetection(robot):
 
 def detectCollision(): 
     msg = robot.checkScan()
-    min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
+    min_dist, min_dist_angle = robot.detect_obstacle(msg)
     if min_dist <= MIN_DIST:
         return True
     return False
 
 def reverseTurn():
-    robot.send_cmd_vel(self, 0, 0)
+    robot.send_cmd_vel(0, 0)
     msg = robot.checkScan()
-    min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
+    min_dist, min_dist_angle = robot.detect_obstacle(msg)
     
     while (min_dist <= MIN_DIST * 3):
-        robot.send_cmd_vel(self, -10, 0)
+        robot.send_cmd_vel(-10, 0)
         rclpy.spin_once(robot, timeout_sec=0.05)
         msg = robot.checkScan()
-        min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
-    robot.rotate(self, 30, 1)
+        min_dist, min_dist_angle = robot.detect_obstacle(msg)
+    robot.rotate(30, 1)
 
 def automatedMove():
-    robot.send_cmd_vel(self, 3, 0)
+    robot.send_cmd_vel(3, 0)
     
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
