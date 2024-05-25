@@ -49,6 +49,7 @@ def detectCollision():
     msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(msg)
     if min_dist <= MIN_DIST:
+        print("Collision detected")
         return True
     return False
 
@@ -82,6 +83,7 @@ try:
         automatedMove()
 
         if detectCollision():
+            print("Working correctly")
             reverseTurn()
         
 except KeyboardInterrupt:
