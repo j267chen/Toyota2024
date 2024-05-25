@@ -20,6 +20,38 @@ print("running main")
 #start processes
 MIN_DIST = 0.3
 #add starter functions here
+def stopSignDetection(robot):
+    """
+    Detect stop signs in an image using YOLO object detection.
+
+    Parameters:
+    - robot: An object that provides access to image processing and other functionalities.
+
+    Returns:
+    - results: Detection results containing information about stop sign locations.
+    """
+    try:
+        # Check the image using the robot's functionality
+        picture = robot.checkImage()
+
+        # Convert the image to OpenCV format
+        imageToCV = robot.roslmg_to_cv2()
+
+        # Load the YOLO model for object detection
+        model = YOLO('yolov8n.pt')
+
+        # Perform object detection using the image
+        results = model.predict(imageToCV)
+
+        # Further process the results as needed
+
+        # Return the detection results or perform additional actions
+        return results
+
+    except Exception as e:
+        print(f"Error in stopSignDetection: {e}")
+        return None
+
 def detectCollision(): 
     msg = robot.checkScan()
     min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
