@@ -18,7 +18,14 @@ if not "robot" in globals():
 print("running main")
 
 #start processes
+MIN_DIST = 0.3
 #add starter functions here
+def detectCollision(): 
+    msg = robot.checkScan()
+    min_dist, min_dist_angle = robot.detect_obstacle(self, msg)
+    if min_dist <= MIN_DIST:
+        return True
+    return False
 
 #rclpy,spin_once is a function that updates the ros topics once
 rclpy.spin_once(robot, timeout_sec=0.1)
