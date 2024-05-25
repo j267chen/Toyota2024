@@ -21,15 +21,6 @@ print("running main")
 MIN_DIST = 0.3
 #add starter functions here
 def stopSignDetection(robot):
-    """
-    Detect stop signs in an image using YOLO object detection.
-
-    Parameters:
-    - robot: An object that provides access to image processing and other functionalities.
-
-    Returns:
-    - results: Detection results containing information about stop sign locations.
-    """
     try:
         # Check the image using the robot's functionality
         picture = robot.checkImage()
@@ -40,13 +31,14 @@ def stopSignDetection(robot):
         # Load the YOLO model for object detection
         model = YOLO('yolov8n.pt')
 
-        # Perform object detection using the image
-        results = model.predict(imageToCV)
+        # Perform prediction of stop signs using the ML_predict_stop_sign function
+        stop_sign_detected, x1, y1, x2, y2 = ML_predict_stop_sign(model, imageToCV)
 
-        # Further process the results as needed
+        # Further process the detection results as needed
 
         # Return the detection results or perform additional actions
-        return results
+
+        return stop_sign_detected, x1, y1, x2, y2
 
     except Exception as e:
         print(f"Error in stopSignDetection: {e}")
