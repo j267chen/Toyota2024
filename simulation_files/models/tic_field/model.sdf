@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="tic_field">
+    <static>true</static>
+    <pose>0 0 0.0 0 0 0</pose>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://tic_field/meshes/tic_field.STL</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://tic_field/meshes/tic_field.STL</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.76 0.60 0.42 1</ambient> <!-- Light brown for ambient -->
+          <diffuse>0.76 0.60 0.42 1</diffuse> <!-- Light brown for diffuse -->
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+
