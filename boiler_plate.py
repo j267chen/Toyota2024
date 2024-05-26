@@ -1,5 +1,6 @@
 #Start with imports, ie: import the wrapper
 #import other libraries as needed
+import time
 import TMMC_Wrapper
 import rclpy
 import numpy as np
@@ -9,8 +10,11 @@ import math
 if not rclpy.ok():
     rclpy.init()
 
-#Specify hardware api
-TMMC_Wrapper.use_hardware()
+TMMC_Wrapper.is_SIM = True
+if not TMMC_Wrapper.is_SIM:
+    #Specify hardware api
+    TMMC_Wrapper.use_hardware()
+
 if not "robot" in globals():
     robot = TMMC_Wrapper.Robot()
 
@@ -60,14 +64,14 @@ def reverseTurn():
     min_dist, min_dist_angle = robot.detect_obstacle(msg)
     
     while (min_dist <= MIN_DIST * 3):
-        robot.send_cmd_vel(-10, 0)
-        rclpy.spin_once(robot, timeout_sec=0.05)
+        robot.send_cmd_vel(-1, 0)
+        rclpy.spin_once(robot, timeout_sec=0.1)
         msg = robot.checkScan()
         min_dist, min_dist_angle = robot.detect_obstacle(msg)
     robot.rotate(30, 1)
 
 def automatedMove():
-    robot.send_cmd_vel(3, 0)
+    robot.send_cmd_vel(1, 0)
     print("Moving")
     
 #rclpy,spin_once is a function that updates the ros topics once
@@ -87,6 +91,8 @@ try:
         if detectCollision():
             print("Working correctly")
             reverseTurn()
+
+        time.sleep(0.1)
         
 except KeyboardInterrupt:
     print("keyboard interrupt receieved.Stopping...")
